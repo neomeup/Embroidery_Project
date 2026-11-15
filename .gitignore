@@ -17,3 +17,7 @@ Thumbs.db
 
 # Saved Photos
 saved_photos
+
+# Tracked originally to show example structure but unneeded permenently
+input_photo
+output_templates

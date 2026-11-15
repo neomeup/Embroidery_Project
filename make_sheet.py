@@ -533,9 +533,9 @@ else:
     PROCESSED_MASTER_LIST = MASTER_LIST.copy()
 
 def find_prominent_colors(image_path, num_colors):
-    """
-    Find the most prominent colors in the image using k-means clustering.
-    """
+
+    #Find the most prominent colors in the image using k-means clustering.
+
     image = Image.open(image_path).convert("RGB")
     image_array = np.array(image)
     pixels = image_array.reshape(-1, 3)
@@ -547,9 +547,9 @@ def find_prominent_colors(image_path, num_colors):
     return cluster_centers
 
 def match_colors_to_master(cluster_centers, master_list):
-    """
-    Match cluster centers to the closest colors in the master list.
-    """
+
+    #Match cluster centers to the closest colors in the master list.
+
     matched_colors = []
     for center in cluster_centers:
         lab_center = convert_color(sRGBColor(center[0] / 255, center[1] / 255, center[2] / 255), LabColor)

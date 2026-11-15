@@ -33,6 +33,8 @@ from sklearn.cluster import KMeans
 import numpy as np
 from pathlib import Path
 
+import user_parameters
+
 # Locate the project directory
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -70,15 +72,6 @@ while True:
         break
 
     counter += 1
-
-# User-defined parameters
-#INPUT_PATH = r"C:\Users\Neal\OneDrive\Desktop\pyproj\py3120\excel_sheet_brod\photo_3.jpg"
-#OUTPUT_PATH = "Julie_marion_example.xlsx"
-GRID_ROWS = 50
-GRID_COLS = 100
-USE_ALL_COLORS = False  # Set to False to limit the palette
-MAX_COLORS = 10         # Number of colors to use if USE_ALL_COLORS is False
-FILTER_UNOWNED_COLORS = True  # Set to False to include unowned colors in the processed list
 
 # Master list: [(RGB tuple), "Hex Code", "DMC code - Name", Owned (True/False)]
 MASTER_LIST = [
@@ -566,7 +559,7 @@ MASTER_LIST = [
 ]
 
 # Processed Master List: Filters based on ownership status
-if FILTER_UNOWNED_COLORS:
+if user_parameters.FILTER_UNOWNED_COLORS:
     PROCESSED_MASTER_LIST = [color for color in MASTER_LIST if color[3]]
 else:
     PROCESSED_MASTER_LIST = MASTER_LIST.copy()
@@ -609,9 +602,9 @@ def match_colors_to_master(cluster_centers, master_list):
     return matched_colors
 
 # Modify the palette processing logic
-if not USE_ALL_COLORS:
+if not user_parameters.USE_ALL_COLORS:
     # Find prominent colors in the input image
-    cluster_centers = find_prominent_colors(INPUT_PATH, MAX_COLORS)
+    cluster_centers = find_prominent_colors(INPUT_PATH, user_parameters.MAX_COLORS)
 
     # Match the cluster centers to the master list
     PROCESSED_MASTER_LIST = match_colors_to_master(cluster_centers, MASTER_LIST)
@@ -686,7 +679,7 @@ def create_sheet(input_path, output_path, grid_rows, grid_cols):
     print(f"Excel file saved: {output_path}")
 
 # Run the program
-create_sheet(INPUT_PATH, OUTPUT_PATH, GRID_ROWS, GRID_COLS)
+create_sheet(INPUT_PATH, OUTPUT_PATH, user_parameters.GRID_ROWS, user_parameters.GRID_COLS)
 
 # Calculate the end time and time taken
 end = time.time()

@@ -15,7 +15,7 @@ import numpy as np
 
 # User-defined parameters
 INPUT_PATH = r"C:\Users\Neal\OneDrive\Desktop\pyproj\py3120\excel_sheet_brod\photo_3.jpg"
-OUTPUT_PATH = "Julie_marion_example_50.xlsx"
+OUTPUT_PATH = "Julie_marion_example_50k.xlsx"
 GRID_ROWS = 50
 GRID_COLS = 100
 USE_ALL_COLORS = False  # Set to False to limit the palette
@@ -513,10 +513,9 @@ if FILTER_UNOWNED_COLORS:
 else:
     PROCESSED_MASTER_LIST = MASTER_LIST.copy()
 
+
+#Find the most prominent colors in the image using k-means clustering.
 def find_prominent_colors(image_path, num_colors):
-    """
-    Find the most prominent colors in the image using k-means clustering.
-    """
     image = Image.open(image_path).convert("RGB")
     image_array = np.array(image)
     pixels = image_array.reshape(-1, 3)
@@ -527,10 +526,8 @@ def find_prominent_colors(image_path, num_colors):
 
     return cluster_centers
 
+#Match cluster centers to the closest colors in the master list.
 def match_colors_to_master(cluster_centers, master_list):
-    """
-    Match cluster centers to the closest colors in the master list.
-    """
     matched_colors = []
     for center in cluster_centers:
         lab_center = convert_color(sRGBColor(center[0] / 255, center[1] / 255, center[2] / 255), LabColor)

@@ -1,0 +1,6 @@
+numpy==2.5.4
+pillow==13.0.0
+openpyxl==3.1.5
+colormath==3.0.0
+scikit-learn==1.9.1
+optuna==5.0.0

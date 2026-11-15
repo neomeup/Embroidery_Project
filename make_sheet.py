@@ -31,15 +31,54 @@ from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cie2000
 from sklearn.cluster import KMeans
 import numpy as np
+from pathlib import Path
+
+# Locate the project directory
+BASE_DIR = Path(__file__).resolve().parent
+
+# Input directory
+INPUT_DIR = BASE_DIR / "input_photo"
+
+# Output directory
+OUTPUT_DIR = BASE_DIR / "output_templates"
+
+# Create output directory if it doesn't exist
+OUTPUT_DIR.mkdir(exist_ok=True)
+
+# Find input photo
+input_files = [file for file in INPUT_DIR.iterdir() if file.is_file()]
+
+if len(input_files) == 0:
+    raise FileNotFoundError(
+        "No photo found in input folder. Please add a photo to convert."
+    )
+
+if len(input_files) > 1:
+    raise ValueError(
+        "Multiple files exist in input folder, please select a single photo to convert"
+    )
+
+INPUT_PATH = input_files[0]
+
+# Find the next available output filename
+counter = 1
+
+while True:
+    OUTPUT_PATH = OUTPUT_DIR / f"output_{counter}.xlsx"
+
+    if not OUTPUT_PATH.exists():
+        break
+
+    counter += 1
 
 # User-defined parameters
-INPUT_PATH = r"C:\Users\Neal\OneDrive\Desktop\pyproj\py3120\excel_sheet_brod\photo_3.jpg"
-OUTPUT_PATH = "Julie_marion_example.xlsx"
+#INPUT_PATH = r"C:\Users\Neal\OneDrive\Desktop\pyproj\py3120\excel_sheet_brod\photo_3.jpg"
+#OUTPUT_PATH = "Julie_marion_example.xlsx"
 GRID_ROWS = 50
 GRID_COLS = 100
-USE_ALL_COLORS = True  # Set to False to limit the palette
-MAX_COLORS = 20         # Number of colors to use if USE_ALL_COLORS is False
-FILTER_UNOWNED_COLORS = False  # Set to False to include unowned colors in the processed list
+USE_ALL_COLORS = False  # Set to False to limit the palette
+MAX_COLORS = 10         # Number of colors to use if USE_ALL_COLORS is False
+FILTER_UNOWNED_COLORS = True  # Set to False to include unowned colors in the processed list
 
 # Master list: [(RGB tuple), "Hex Code", "DMC code - Name", Owned (True/False)]
 MASTER_LIST = [

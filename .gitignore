@@ -13,3 +13,7 @@ venv/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+
+# Saved Photos
+saved_photos
